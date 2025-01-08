@@ -1,0 +1,37 @@
+name: Read, search, reply, mark it as read
+
+on:
+  push:
+    branches: ['main']
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 3
+
+    steps:
+      
+      - uses: actions/checkout@v3
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        
+        with:
+          node-version: 18.x
+          cache: 'yarn'
+      
+      - name: Install packages
+        
+        run: yarn install
+      
+      - name: Read search and send email
+        
+        run: |
+          node read-send-email.js
+        env:
+          FROM: ${{ vars.FROM }}
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
