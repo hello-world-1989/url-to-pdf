@@ -20,7 +20,15 @@ export async function keywordToPDF(keyword) {
     });
 
     try {
-      await page.goto(`https://www.google.com/search?q=${keyword}`);
+      if (
+        keyword?.startsWith('http://') ||
+        keyword?.startsWith('https://') ||
+        keyword?.startsWith('www.')
+      ) {
+        await page.goto(`${keyword}`);
+      } else {
+        await page.goto(`https://www.google.com/search?q=${keyword}`);
+      }
     } catch (err) {
       console.log(`Error  ${keyword}`, err);
     }

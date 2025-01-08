@@ -90,6 +90,9 @@ async function readEmailAndMarkAsRead() {
 
       if (
         subject?.includes('搜索') ||
+        subject?.startsWith('http://') ||
+        subject?.startsWith('https://') ||
+        subject?.startsWith('www.') ||
         subject?.toLowerCase()?.includes('search') ||
         body.includes('搜索') ||
         body?.toLowerCase()?.includes('search')
