@@ -12,6 +12,7 @@ export async function keywordToPDF(keyword) {
   try {
     browser = await puppeteer.launch({
       timeout: 30_000,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
 
